@@ -60,7 +60,7 @@ class WeightsDownloader:
         start = time.time()
         # Extract filename from URL
         os.makedirs(dest, exist_ok=True)
-        
+
         filename = os.path.basename(urlparse(url).path)
 
         # Construct the full destination path
@@ -75,6 +75,10 @@ class WeightsDownloader:
                 url,  # URL to download
             ],
             close_fds=False,
+        )
+
+        subprocess.check_call(
+            ["tar", "-xf", dest_path, "-C", dest], close_fds=False
         )
         elapsed_time = time.time() - start
         try:
