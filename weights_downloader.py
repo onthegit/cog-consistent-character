@@ -59,6 +59,8 @@ class WeightsDownloader:
         print(f"⏳ Downloading {weight_str} to {dest}")
         start = time.time()
         # Extract filename from URL
+        os.makedirs(dest, exist_ok=True)
+        
         filename = os.path.basename(urlparse(url).path)
 
         # Construct the full destination path
