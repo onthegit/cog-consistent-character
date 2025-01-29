@@ -80,6 +80,10 @@ class WeightsDownloader:
         subprocess.check_call(
             ["tar", "-xf", dest_path, "-C", dest], close_fds=False
         )
+
+        subprocess.check_call(
+            ["rm", "-f", dest_path], close_fds=False
+        )
         elapsed_time = time.time() - start
         try:
             file_size_bytes = os.path.getsize(
