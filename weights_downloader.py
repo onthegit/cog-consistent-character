@@ -78,7 +78,7 @@ class WeightsDownloader:
         )
 
         subprocess.check_call(
-            ["tar", "-xf", dest_path.replace('.tar', ''), "-C", dest_path], close_fds=False
+            ["tar", "-xf", dest_path, "-C", dest], close_fds=False
         )
 
         subprocess.check_call(
