@@ -54,7 +54,7 @@ class WeightsManifest:
                         UPDATED_WEIGHTS_MANIFEST_URL,  # URL to download
                     ],
                     close_fds=False,
-                    timeout=5,
+                    timeout=10,
                 )
                 print(
                     f"Downloading {UPDATED_WEIGHTS_MANIFEST_URL} took: {(time.time() - start):.2f}s"
