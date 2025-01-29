@@ -1,7 +1,7 @@
 import subprocess
 import time
 import os
-
+from urllib.parse import urlparse
 from weights_manifest import WeightsManifest
 
 BASE_URL = "https://weights.replicate.delivery/default/comfy-ui"
@@ -58,8 +58,21 @@ class WeightsDownloader:
 
         print(f"⏳ Downloading {weight_str} to {dest}")
         start = time.time()
+        # Extract filename from URL
+        filename = os.path.basename(urlparse(url).path)
+
+        # Construct the full destination path
+        dest_path = os.path.join(dest, filename)
+
+        # Run wget to download the file
         subprocess.check_call(
-            ["wget", "-q", "-O", dest, url], close_fds=False
+            [
+                "wget",
+                "-q",  # Quiet mode (similar to --log-level warn)
+                "-O", dest_path,  # Save to the destination folder
+                url,  # URL to download
+            ],
+            close_fds=False,
         )
         elapsed_time = time.time() - start
         try:

@@ -3,6 +3,7 @@ import time
 import os
 import json
 import custom_node_helpers as helpers
+from urllib.parse import urlparse
 
 UPDATED_WEIGHTS_MANIFEST_URL = (
     "https://raw.githubusercontent.com/fofr/cog-comfyui/main/weights.json"
@@ -39,15 +40,21 @@ class WeightsManifest:
             )
             start = time.time()
             try:
+                filename = os.path.basename(urlparse(UPDATED_WEIGHTS_MANIFEST_URL).path)
+
+                # Construct the full destination path
+                dest_path = os.path.join(UPDATED_WEIGHTS_MANIFEST_PATH, filename)
+
+                # Run wget to download the file
                 subprocess.check_call(
                     [
                         "wget",
-                        "-q",  # Quiet mode, equivalent to "--log-level warn"
-                        "-O", UPDATED_WEIGHTS_MANIFEST_PATH,  # Output file path
-                        UPDATED_WEIGHTS_MANIFEST_URL,  # URL to download from
+                        "-q",  # Quiet mode
+                        "-O", dest_path,  # Save to the destination folder
+                        UPDATED_WEIGHTS_MANIFEST_URL,  # URL to download
                     ],
                     close_fds=False,
-                    timeout=15,
+                    timeout=5,
                 )
                 print(
                     f"Downloading {UPDATED_WEIGHTS_MANIFEST_URL} took: {(time.time() - start):.2f}s"
